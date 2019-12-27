@@ -1,3 +1,21 @@
+nav {
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(145, 161, 251);
+  justify-content: space-around;
+  padding: 8px;
+}
+
+.main-div {
+  margin: auto;
+  width: 50%;
+}
+
+.state-button {
+  margin: 0 0.8em;
+  align-self: flex-end;
+}
+
 .App {
   text-align: center;
 }
