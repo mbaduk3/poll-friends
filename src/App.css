@@ -16,6 +16,11 @@ nav {
   align-self: flex-end;
 }
 
+.generator-div {
+  background-color: whitesmoke;
+  height: 90vh;
+}
+
 .App {
   text-align: center;
 }
