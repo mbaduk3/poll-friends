@@ -5,13 +5,17 @@ class Generator extends React.Component {
 
     constructor() {
         super();
-        this.state={};
+        this.state={
+            user: "defaultUser",
+            title: "testForm",
+            questions: []
+        };
     }
 
     render() {
         return (
             <div class="generator-div">
-                Generator here
+                <h1>{this.state.title}</h1>
             </div>
         )
     }
