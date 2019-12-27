@@ -1,33 +1,61 @@
 import React from 'react'
 import '../App.css'
 
-// Question types: short ans, multiple choice (radio), checkbox, dropdown
+// Question types: short ans, multiple choice (radio), checkbox
 
 class Question extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            type: "shortAns",
-            prompt: "defaultPrompt",
-            choices: []
+            type: this.props.type,
+            prompt: this.props.prompt,
+            responses: this.props.responses,
+            value: "null"
         }
     }
 
     renderShortAns() {
-        
+       return (
+            <input type="text" placeholder={this.state.value}></input>
+       )
     }
 
     renderMultipleChoice() {
+        const multipleJsx = 
+            this.state.responses.map(res => {
+                    return (
+                        <div className="choice-div">
+                        <input 
+                            key={res}
+                            type="radio" 
+                            id={res} 
+                            name={this.state.prompt} 
+                            value={res}>
+                        </input>
+                        <label for={res}>{res}</label>
+                        </div>
+                    )
+                }
+            )
+        return multipleJsx
 
     }
 
     renderCheckbox() {
-
-    }
-
-    renderDropdown() {
-
+        return (
+            this.state.responses.map(res => {
+                return (
+                    <input  
+                        key={res}
+                        type="checkbox"
+                        id={res}
+                        name={this.state.prompt}
+                        value={res}>
+                    </input>
+                )
+            })
+        )
     }
 
     render() {
@@ -44,16 +72,15 @@ class Question extends React.Component {
             case "checkbox":
                 res = this.renderCheckbox();
                 break;
-            case "dropdown":
-                res = this.renderDropdown();
-                break;
         }
 
         return (
             <div class="question-div">
                 <h3>{this.state.prompt}</h3>
-                <p>{res}</p>
+                <div class="response-div">{res}</div>
             </div>
         )
     }
 }
+
+export default Question

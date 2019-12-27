@@ -1,0 +1,24 @@
+{
+    "user": "defaultUser",
+    "title": "defaultTitle",
+    "questions": [
+        {
+            "type": "multipleChoice",
+            "prompt": "defaultPrompt",
+            "responses": [
+                "defaultChoice1",
+                "defaultChoice2", 
+                "defaultChoice3"
+            ]
+        },
+        {
+            "type": "multipleChoice",
+            "prompt": "defaultPrompt2",
+            "responses": [
+                "defaultChoice1",
+                "defaultChoice2", 
+                "defaultChoice3"
+            ]
+        }
+    ]
+}
