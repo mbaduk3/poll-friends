@@ -3,6 +3,7 @@
     "title": "defaultTitle",
     "questions": [
         {
+            "id": 0,
             "type": "multipleChoice",
             "prompt": "defaultPrompt",
             "responses": [
@@ -12,6 +13,7 @@
             ]
         },
         {
+            "id": 1,
             "type": "multipleChoice",
             "prompt": "defaultPrompt2",
             "responses": [

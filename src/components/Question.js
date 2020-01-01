@@ -25,15 +25,17 @@ class Question extends React.Component {
         const multipleJsx = 
             this.state.responses.map(res => {
                     return (
-                        <div className="choice-div">
-                        <input 
-                            key={res}
-                            type="radio" 
-                            id={res} 
-                            name={this.state.prompt} 
-                            value={res}>
-                        </input>
-                        <label for={res}>{res}</label>
+                        <div 
+                            className="choice-div"
+                            key={res}>
+                            <input 
+                                key={res}
+                                type="radio" 
+                                id={res} 
+                                name={this.state.prompt} 
+                                value={res}>
+                            </input>
+                        <label htmlFor={res}>{res}</label>
                         </div>
                     )
                 }
@@ -63,6 +65,8 @@ class Question extends React.Component {
         let res;
 
         switch(this.state.type) {
+            default:
+                break
             case "shortAns":
                 res = this.renderShortAns();
                 break;
@@ -75,9 +79,9 @@ class Question extends React.Component {
         }
 
         return (
-            <div class="question-div">
+            <div className="question-div">
                 <h3>{this.state.prompt}</h3>
-                <div class="response-div">{res}</div>
+                <div className="response-div">{res}</div>
             </div>
         )
     }

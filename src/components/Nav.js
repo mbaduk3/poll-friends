@@ -4,9 +4,9 @@ import '../App.css';
 function Nav() {
     return (
         <nav>
-            <a>PollFriends</a>
-            <button class="state-button">Save</button>
-            <button class="state-button">Send</button>
+            <a href="#link">PollFriends</a>
+            <button className="state-button">Save</button>
+            <button className="state-button">Send</button>
         </nav>
     )
 }
