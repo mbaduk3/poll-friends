@@ -5,8 +5,7 @@ import ResponseMaker from './ResponseMaker'
 class QuestionModal extends React.Component {
 
     state = {
-        id: this.props.id,
-        type: "",
+        type: "multipleChoice",
         prompt: "defaultPrompt",
         responses: ["Hello", "World"]
     }

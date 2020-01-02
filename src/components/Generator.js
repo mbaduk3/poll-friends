@@ -13,7 +13,6 @@ class Generator extends React.Component {
             user: data.user,
             title: data.title,
             questions: data.questions,
-            ipQuestion: null
         };
     }
 
@@ -50,8 +49,13 @@ class Generator extends React.Component {
 
     }
 
-    addQHandler = () => {
-        
+    addQHandler = (newQ) => {
+        const questionsCpy = [...this.state.questions];
+        const qCpy = {...newQ};
+        qCpy.id = questionsCpy.length + 1;
+        questionsCpy.push(qCpy);
+        console.log(questionsCpy);
+        this.setState({questions: questionsCpy})
     }
 
     render() {
@@ -64,7 +68,8 @@ class Generator extends React.Component {
                         onClick={this.addQuestionHandler}>
                             Add Question
                     </button>
-                    <QuestionModal />
+                    <QuestionModal 
+                        addQHandler={this.addQHandler}/>
                 </form>
             </div>
         )
