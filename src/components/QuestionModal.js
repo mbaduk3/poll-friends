@@ -10,6 +10,19 @@ class QuestionModal extends React.Component {
         responses: ["Hello", "World"]
     }
 
+    submit = () => {
+        this.props.addQHandler(this.state);
+        this.resetState();
+    }
+
+    resetState = () => {
+        this.setState({
+            type: "multipleChoice",
+            prompt: "defaultPrompt",
+            responses: ["Hello", "World"]
+        });
+    }
+
     promptChangeHandler = (event) => {
         this.setState({prompt: event.target.value})
     }
@@ -32,8 +45,8 @@ class QuestionModal extends React.Component {
 
     render() {
         return <Popup 
-            trigger={<button>Press</button>}
-            position="bottom left">
+                    modal
+                    open={this.props.show}>
                 <React.Fragment>
                     <label htmlFor="questionPrompt">Question Prompt:</label> 
                     <input 
@@ -48,8 +61,8 @@ class QuestionModal extends React.Component {
                         value={this.state.type}
                         onChange={this.typeChangeHandler}>
                         <option value="multipleChoice">Multiple Choice</option>
-                        <option value="shortAns">Short Answer</option>
-                        <option value="checkbox">Checkbox</option>
+                        {/* <option value="shortAns">Short Answer</option>
+                        <option value="checkbox">Checkbox</option> */}
                     </select>
                     <ResponseMaker 
                         type={this.state.type}
@@ -57,7 +70,7 @@ class QuestionModal extends React.Component {
                         addRespHandler={this.addRespHandler}
                         changeRespHandler={this.changeResponseHandler}/>
                     <button 
-                        onClick={() => this.props.addQHandler(this.state)}>
+                        onClick={this.submit}>
                             Add Question
                     </button>
                 </React.Fragment>

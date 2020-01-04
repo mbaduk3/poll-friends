@@ -3,36 +3,26 @@ import '../App.css'
 
 // Question types: short ans, multiple choice (radio), checkbox
 
-class Question extends React.Component {
+const question = (props) => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            type: this.props.type,
-            prompt: this.props.prompt,
-            responses: this.props.responses,
-            value: "null"
-        }
-    }
-
-    renderShortAns() {
+    const renderShortAns = () => {
        return (
-            <input type="text" placeholder={this.state.value}></input>
+            <input type="text" placeholder={props.responses[props.ans]}></input>
        )
     }
 
-    renderMultipleChoice() {
+    const renderMultipleChoice = () => {
         const multipleJsx = 
-            this.state.responses.map(res => {
+            props.responses.map((res, i) => {
                     return (
                         <div 
                             className="choice-div"
-                            key={res}>
+                            key={res + "_" + i}>
                             <input 
-                                key={res}
+                                key={"question" + props.id + res + "_" + i}
                                 type="radio" 
-                                id={res} 
-                                name={this.state.prompt} 
+                                id={"question" + props.id + res + "_" + i}
+                                name={props.prompt} 
                                 value={res}>
                             </input>
                         <label htmlFor={res}>{res}</label>
@@ -44,15 +34,15 @@ class Question extends React.Component {
 
     }
 
-    renderCheckbox() {
+    const renderCheckbox = () => {
         return (
-            this.state.responses.map(res => {
+            props.responses.map(res => {
                 return (
                     <input  
                         key={res}
                         type="checkbox"
                         id={res}
-                        name={this.state.prompt}
+                        name={props.prompt}
                         value={res}>
                     </input>
                 )
@@ -60,31 +50,29 @@ class Question extends React.Component {
         )
     }
 
-    render() {
 
-        let res;
+    let res;
 
-        switch(this.state.type) {
-            default:
-                break
-            case "shortAns":
-                res = this.renderShortAns();
-                break;
-            case "multipleChoice":
-                res = this.renderMultipleChoice();
-                break;
-            case "checkbox":
-                res = this.renderCheckbox();
-                break;
-        }
+    switch(props.type) {
+        default:
+            break
+        case "shortAns":
+            res = renderShortAns();
+            break;
+        case "multipleChoice":
+            res = renderMultipleChoice();
+            break;
+        case "checkbox":
+            res = renderCheckbox();
+            break;
+    }
 
         return (
             <div className="question-div">
-                <h3>{this.state.prompt}</h3>
+                <h3>{props.prompt}</h3>
                 <div className="response-div">{res}</div>
             </div>
         )
-    }
 }
 
-export default Question
+export default question

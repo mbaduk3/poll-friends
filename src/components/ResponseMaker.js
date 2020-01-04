@@ -4,7 +4,7 @@ const responseMaker = (props) => {
 
     const resps = props.responses.map((resp, i) => (
         <input 
-            key={resp + i}
+            key={i}
             type="text" 
             value={resp} 
             onChange={(event) => props.changeRespHandler(event, i)}></input>
