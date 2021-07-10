@@ -8,7 +8,6 @@ import axios from 'axios'
 class Generator extends React.Component {
 
     constructor(props) {
-        console.log("[Generator] constructor()");
         super(props);
         this.state = {
             user: null,
@@ -17,20 +16,36 @@ class Generator extends React.Component {
             showModal: false,
             loading: true,
             error: false,
-            msg: null
+            msg: null,
+            pollId: null
         };
     }
 
     componentDidMount() {
-        axios.get('https://poll-friends.firebaseio.com/polls/testPoll.json')
+        const { pollId } = this.props.match.params;
+        axios.get('https://poll-friends.firebaseio.com/polls/' + pollId + '.json')
             .then(res => {
                 console.log(res);
-                this.setState({
-                    user: res.data.user,
-                    title: res.data.title,
-                    questions: res.data.questions,
-                    loading: false,
-                    error: false});
+                if (res.data == null) {
+                    this.setState({
+                        user: null, 
+                        title: 'Untitled',
+                        questions: [],
+                        loading: false,
+                        pollId: pollId,
+                        error: false
+                    });
+                }
+                else {
+                    this.setState({
+                        user: res.data.user,
+                        title: res.data.title,
+                        questions: res.data.questions,
+                        loading: false,
+                        pollId: pollId,
+                        error: false
+                    });
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -47,6 +62,7 @@ class Generator extends React.Component {
                 type={q.type}
                 prompt={q.prompt}
                 responses={q.responses} 
+                delHandler={() => this.deleteHandler(q.id)}
                 ans={1}
             />
         )
@@ -59,15 +75,32 @@ class Generator extends React.Component {
     addQHandler = (newQ) => {
         const questionsCpy = [...this.state.questions];
         const qCpy = {...newQ};
-        qCpy.id = questionsCpy.length + 1;
+        if (questionsCpy.length !== 0) {
+            qCpy.id = questionsCpy[questionsCpy.length - 1].id + 1;
+        } else {
+            qCpy.id = 0;
+        }
         questionsCpy.push(qCpy);
         this.setState({questions: questionsCpy})
     }
 
+    deleteHandler = (id) => {
+        const questionsCpy = [];
+        for (const q in this.state.questions) {
+            const ques = this.state.questions[q];
+            if (ques.id !== id) questionsCpy.push(ques);
+        }
+        this.setState({questions: questionsCpy});
+    }
+
     savePollHandler = () => {
-        axios.put('https://poll-friends.firebaseio.com/polls/testPoll/questions.json', this.state.questions)
+        axios.put('https://poll-friends.firebaseio.com/polls/' + this.state.pollId + '/questions.json', this.state.questions)
             .then(res => this.setState({ msg: "Saved!" }))
             .catch(err => this.setState({ msg: "Could not save..."}));
+    }
+
+    submitHandler = (event) => {
+        event.preventDefault();
     }
 
     render() {
@@ -76,7 +109,7 @@ class Generator extends React.Component {
             <div className="generator-div">
             <p>{this.state.msg}</p>
             <h1>{this.state.title}</h1>
-            <form>
+            <form onSubmit={this.submitHandler}>
                 {this.generateQuestions(this.state.questions)}
                 <button onClick={this.showModalHandler}>Add a question</button>
                 <QuestionModal 

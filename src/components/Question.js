@@ -69,7 +69,10 @@ const question = (props) => {
 
         return (
             <div className="question-div">
-                <h3>{props.prompt}</h3>
+                <div className="prompt-div">
+                    <h3>{props.prompt}</h3>
+                    <button onClick={props.delHandler}>X</button>
+                </div>
                 <div className="response-div">{res}</div>
             </div>
         )
